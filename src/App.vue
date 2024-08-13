@@ -1,10 +1,12 @@
 <script setup>
-import JSON from './components/JSON.vue'
+// import JSON from './components/JSON.vue'
+import Forms from './components/Form.vue'
 </script>
 
 <template>
   <main>
-    <JSON />
+    <!-- <JSON /> -->
+    <Forms />
   </main>
 </template>
 
