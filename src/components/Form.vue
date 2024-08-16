@@ -36,23 +36,54 @@
           </div>
           <div class="row mb-3">
             <div class="col-sm-6">
-              <div class="form-check">
-                <input
-                  type="checkbox"
-                  class="form-check-input"
-                  id="isAustralian"
-                  v-model="formData.isAustralian"
-                />
-                <label class="form-check-label" for="isAustralian">Australian Resident?</label>
+              <div class="col-sm-6">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="isAustralian"
+                    value="Austalian Resident"
+                    @blur="() => validateNationality(true)"
+                    @input="() => validateNationality(false)"
+                    v-model="formData.nationality"
+                  />
+                  <label class="form-check-label" for="isAustralian">Australian Resident</label>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <div class="form-check">
+                  <input
+                    type="radio"
+                    class="form-check-input"
+                    id="isForeign"
+                    value="Foreign National"
+                    v-model="formData.nationality"
+                  />
+                  <label class="form-check-label" for="isForeign">Foreign National</label>
+                </div>
+              </div>
+
+              <div v-if="errors.nationality" class="text-danger">
+                {{ errors.nationality }}
               </div>
             </div>
+
             <div class="col-sm-6">
               <label for="gender" class="form-label">Gender</label>
-              <select class="form-select" id="gender" v-model="formData.gender">
+              <select
+                class="form-select"
+                id="gender"
+                @blur="() => validateGender(true)"
+                @input="() => validateGender(false)"
+                v-model="formData.gender"
+              >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
               </select>
+              <div v-if="errors.gender" class="text-danger">
+                {{ errors.gender }}
+              </div>
             </div>
           </div>
           <div class="mb-3">
@@ -61,8 +92,13 @@
               class="form-control"
               id="reason"
               rows="3"
+              @blur="() => validateReason(true)"
+              @input="() => validateReason(false)"
               v-model="formData.reason"
             ></textarea>
+            <div v-if="errors.reason" class="text-danger">
+              {{ errors.reason }}
+            </div>
           </div>
           <div class="text-center">
             <button type="submit" class="btn btn-primary me-2">Submit</button>
@@ -80,9 +116,7 @@
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">Username: {{ card.username }}</li>
                   <li class="list-group-item">Password: {{ card.password }}</li>
-                  <li class="list-group-item">
-                    Australian Resident: {{ card.isAustralian ? 'Yes' : 'No' }}
-                  </li>
+                  <li class="list-group-item">Nationality: {{ card.nationality }}</li>
                   <li class="list-group-item">Gender: {{ card.gender }}</li>
                   <li class="list-group-item">Reason: {{ card.reason }}</li>
                 </ul>
@@ -102,7 +136,7 @@ import { ref } from 'vue'
 const formData = ref({
   username: '',
   password: '',
-  isAustralian: false,
+  nationality: false,
   reason: '',
   gender: ''
 })
@@ -112,7 +146,16 @@ const submittedCards = ref([])
 const submitForm = () => {
   validateName(true)
   validatePassword(true)
-  if (!errors.value.username && !errors.value.password) {
+  validateReason(true)
+  validateGender(true)
+  validateNationality(true)
+  if (
+    !errors.value.username &&
+    !errors.value.password &&
+    !errors.value.reason &&
+    !errors.value.gender &&
+    !errors.value.nationality
+  ) {
     submittedCards.value.push({
       ...formData.value
     })
@@ -124,7 +167,7 @@ const clearData = () => {
   formData.value = {
     username: '',
     password: '',
-    isAustralian: false,
+    nationality: false,
     reason: '',
     gender: ''
   }
@@ -137,7 +180,7 @@ const clearForm = () => {
 const errors = ref({
   username: null,
   password: null,
-  resident: null,
+  nationality: null,
   gender: null,
   reason: null
 })
@@ -170,6 +213,30 @@ const validatePassword = (blur) => {
     if (blur) errors.value.password = 'Password must contain at least one special character.'
   } else {
     errors.value.password = null
+  }
+}
+
+const validateReason = (blur) => {
+  if (formData.value.reason.length < 1) {
+    if (blur) errors.value.reason = 'Reason must be filled.'
+  } else {
+    errors.value.reason = null
+  }
+}
+
+const validateGender = (blur) => {
+  if (formData.value.gender.length < 1) {
+    if (blur) errors.value.gender = 'Gender must be selected.'
+  } else {
+    errors.value.gender = null
+  }
+}
+
+const validateNationality = (blur) => {
+  if (formData.value.nationality < 1) {
+    if (blur) errors.value.nationality = 'Nationality must be selected.'
+  } else {
+    errors.value.nationality = null
   }
 }
 </script>
