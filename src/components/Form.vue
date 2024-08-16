@@ -42,12 +42,12 @@
                     type="radio"
                     class="form-check-input"
                     id="isAustralian"
-                    value="Austalian Resident"
+                    value="Austalian resident"
                     @blur="() => validateNationality(true)"
                     @input="() => validateNationality(false)"
                     v-model="formData.nationality"
                   />
-                  <label class="form-check-label" for="isAustralian">Australian Resident</label>
+                  <label class="form-check-label" for="isAustralian">Australian resident</label>
                 </div>
               </div>
               <div class="col-sm-8">
@@ -56,10 +56,10 @@
                     type="radio"
                     class="form-check-input"
                     id="isForeign"
-                    value="Foreign National"
+                    value="Foreign national"
                     v-model="formData.nationality"
                   />
-                  <label class="form-check-label" for="isForeign">Foreign National</label>
+                  <label class="form-check-label" for="isForeign">Foreign national</label>
                 </div>
               </div>
 
@@ -123,6 +123,16 @@
               </div>
             </div>
           </div>
+
+          <div class="row mt-6" v-if="tableData.length">
+            <DataTable :value="tableData">
+              <Column field="username" header="Username"> </Column>
+              <Column field="password" header="Password"></Column>
+              <Column field="nationality" header="Nationality"></Column>
+              <Column field="gender" header="Gender"></Column>
+              <Column field="reason" header="Reason"></Column>
+            </DataTable>
+          </div>
         </form>
       </div>
     </div>
@@ -142,6 +152,7 @@ const formData = ref({
 })
 
 const submittedCards = ref([])
+const tableData = ref([])
 
 const submitForm = () => {
   validateName(true)
@@ -157,6 +168,10 @@ const submitForm = () => {
     !errors.value.nationality
   ) {
     submittedCards.value.push({
+      ...formData.value
+    })
+
+    tableData.value.push({
       ...formData.value
     })
     clearData()
