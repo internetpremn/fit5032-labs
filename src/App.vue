@@ -1,40 +1,42 @@
 <script setup>
 // import JSON from './components/JSON.vue'
-import Forms from './components/Form.vue'
+import Forms from './views/HomeView.vue'
+import BHeader from './components/BHeader.vue'
+import LoginView from './views/LoginView.vue'
 </script>
 
 <template>
-  <main>
-    <!-- <JSON /> -->
-    <Forms />
-  </main>
+  <!-- <LoginView /> -->
+  <div class="main-container mt-5">
+    <header>
+      <BHeader />
+    </header>
+    <div class="row">
+      <div class="col-sm-8 offset-sm-2"></div>
+      <main class="main-box">
+        <div class="text-center mt-5">
+          <router-view></router-view>
+        </div>
+        <!-- <JSON /> -->
+        <!-- <Forms /> -->
+      </main>
+    </div>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+.card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.card-header {
+  background-color: #275fda;
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
 }
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.list-group-item {
+  padding: 10px;
 }
 </style>
