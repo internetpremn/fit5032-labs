@@ -20,10 +20,11 @@ const routes = [
     component: AboutView,
     beforeEnter: (to, from, next) => {
       // Perform logic before entering the About route
-      if (someCondition) {
+      const loginSuccessful = localStorage.getItem('loginSuccessful') === 'true'
+      if (loginSuccessful) {
         next()
       } else {
-        next(false) // Cancel the navigation
+        next({ name: 'Login' }) // Cancel the navigation
       }
     }
   }
@@ -35,7 +36,8 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.name === 'About' || to.name === 'Home') {
+  const loginSuccessful = localStorage.getItem('loginSuccessful') === 'true'
+  if ((to.name === 'About' || to.name === 'Home') && !loginSuccessful) {
     next({ name: 'Login' })
   } else {
     next()

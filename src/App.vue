@@ -8,9 +8,9 @@ import LoginView from './views/LoginView.vue'
 <template>
   <!-- <LoginView /> -->
   <div class="main-container mt-5">
-    <header>
+    <!-- <header>
       <BHeader />
-    </header>
+    </header> -->
     <div class="row">
       <div class="col-sm-8 offset-sm-2"></div>
       <main class="main-box">
