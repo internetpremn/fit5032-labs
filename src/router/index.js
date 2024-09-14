@@ -2,31 +2,52 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '@/views/LoginView.vue'
+import FirebaseSigninView from '@/views/FirebaseSignin.vue'
+import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
+import AddBookView from '@/views/AddBookView.vue'
+import { getAuth } from 'firebase/auth'
+
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import BookList from '@/components/BookList.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Login',
-    component: LoginView
-  },
-  {
-    path: '/home',
     name: 'Home',
     component: HomeView
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
   },
   {
     path: '/about',
     name: 'About',
     component: AboutView,
-    beforeEnter: (to, from, next) => {
-      // Perform logic before entering the About route
-      const loginSuccessful = localStorage.getItem('loginSuccessful') === 'true'
-      if (loginSuccessful) {
-        next()
-      } else {
-        next({ name: 'Login' }) // Cancel the navigation
-      }
-    }
+    meta: { requiresAuth: true, role: ['buyer'] }
+  },
+  {
+    path: '/firelogin',
+    name: 'FireLogin',
+    component: FirebaseSigninView
+  },
+  {
+    path: '/fireregister',
+    name: 'FireRegister',
+    component: FirebaseRegisterView
+  },
+  {
+    path: '/addbook',
+    name: 'AddBook',
+    component: AddBookView,
+    meta: { requiresAuth: true, role: ['seller'] }
+  },
+  {
+    path: '/booklist',
+    name: 'BookList',
+    component: BookList,
+    meta: { requiresAuth: true, role: ['seller'] }
   }
 ]
 
@@ -35,10 +56,34 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  const loginSuccessful = localStorage.getItem('loginSuccessful') === 'true'
-  if ((to.name === 'About' || to.name === 'Home') && !loginSuccessful) {
-    next({ name: 'Login' })
+const getPersonRole = async (uid) => {
+  const db = getFirestore()
+  const personDocRef = doc(db, 'persons', uid)
+  const personDoc = await getDoc(personDocRef)
+  if (personDoc.exists()) {
+    const personData = personDoc.data()
+    return personData.role
+  }
+  return null
+}
+
+router.beforeEach(async (to, from, next) => {
+  const auth = getAuth()
+  const person = auth.currentUser
+  const buyerLoginSuccessful = localStorage.getItem('buyerLoginSuccessful') === 'true'
+  const sellerLoginSuccessful = localStorage.getItem('sellerLoginSuccessful') === 'true'
+
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if ((!buyerLoginSuccessful && !sellerLoginSuccessful) || !person) {
+      next({ name: 'FireLogin' })
+    } else {
+      const personRole = await getPersonRole(person.uid)
+      if (to.meta.role && to.meta.role.includes(personRole)) {
+        next()
+      } else {
+        next({ name: 'FireLogin' })
+      }
+    }
   } else {
     next()
   }

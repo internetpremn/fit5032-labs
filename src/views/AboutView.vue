@@ -17,8 +17,8 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 const logout = () => {
-  localStorage.removeItem('loginSuccessful')
-  router.push({ name: 'Login' })
+  localStorage.removeItem('buyerLoginSuccessful')
+  router.push({ name: 'FireLogin' })
 }
 </script>
 

@@ -25,21 +25,12 @@
             </div>
 
             <div class="col-sm-6">
-              <label for="gender" class="form-label">Gender</label>
-              <select
-                class="form-select"
-                id="gender"
-                @blur="() => validateGender(true)"
-                @input="() => validateGender(false)"
-                v-model="formData.gender"
-              >
+              <label for="ethnicity" class="form-label">Ethinicity</label>
+              <select class="form-select" id="ethnicity" v-model="formData.ethnicity">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option>
               </select>
-              <div v-if="errors.gender" class="text-danger">
-                {{ errors.gender }}
-              </div>
             </div>
 
             <div class="col-sm-6 mt-3">
