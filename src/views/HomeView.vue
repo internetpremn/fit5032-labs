@@ -147,7 +147,6 @@
                   <li class="list-group-item">Password: {{ card.password }}</li>
                   <li class="list-group-item">Nationality: {{ card.nationality }}</li>
                   <li class="list-group-item">Gender: {{ card.gender }}</li>
-                  <li class="list-group-item">Reason: {{ card.reason }}</li>
                 </ul>
               </div>
             </div>
@@ -159,7 +158,6 @@
 </template>
 
 <script setup>
-// Our logic will go here
 import { ref } from 'vue'
 
 const formData = ref({

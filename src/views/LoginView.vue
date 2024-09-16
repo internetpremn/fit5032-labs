@@ -27,19 +27,16 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 
 const formData = ref({
   username: '',
   password: ''
 })
 
-const router = useRouter()
 
 const submitForm = () => {
   if (formData.value.username === 'username' && formData.value.password === 'password') {
     localStorage.setItem('loginSuccessful', 'true')
-    router.push({ name: 'About' })
   } else {
     alert('Invalid credentials')
   }
