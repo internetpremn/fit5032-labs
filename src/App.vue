@@ -1,14 +1,7 @@
-<script setup>
-// import JSON from './components/JSON.vue'
-// import Forms from './views/HomeView.vue'
-import BHeader from './components/BHeader.vue'
-// import LoginView from './views/LoginView.vue'
-</script>
-
 <template>
   <!-- <LoginView /> -->
   <div class="main-container mt-5">
-    <header>
+    <header v-if="showHeader">
       <BHeader />
     </header>
     <div class="row">
@@ -23,6 +16,26 @@ import BHeader from './components/BHeader.vue'
     </div>
   </div>
 </template>
+
+<script>
+// import JSON from './components/JSON.vue'
+// import Forms from './views/HomeView.vue'
+import BHeader from './components/BHeader.vue'
+import CountBookAPI from './views/CountBookAPI.vue';
+
+export default {
+  name: 'App',
+  components: {
+    BHeader,
+    CountBookAPI
+  },
+  computed: {
+    showHeader() {
+      return this.$route.name !== 'CountBookAPI';
+    }
+  }
+};
+</script>
 
 <style>
 .card {
