@@ -36,3 +36,38 @@ exports.countBooks = onRequest((req, res ) => {
     }
   });
 });
+
+exports.bookNames = onRequest((req, res ) => {
+  cors(req, res, async () => {
+    try {
+      const booksCollection = admin.firestore().collection("books");
+      const snapshot = await booksCollection.get();
+
+      const bookNames = snapshot.docs.map((doc) => doc.data().name);
+
+      res.status(200).send({names: bookNames});
+    } catch (error) {
+      console.error("Error counting books: ", error.message);
+      res.status(500).send("Error counting books");
+    }
+  });
+});
+
+const functions = require("firebase-functions");
+
+exports.addBookWithCapitalization = functions.firestore
+    .document("books/{bookId}")
+    .onCreate(async (snap, context) => {
+      const newBook = snap.data();
+
+      const nameCap = newBook.name.toUpperCase();
+
+      try {
+        await snap.ref.update({
+          name: nameCap,
+        });
+        console.log("Book name capitalized");
+      } catch (error) {
+        console.error("Error capitalizing book name: ", error);
+      }
+    });
