@@ -13,10 +13,10 @@ export default {
         };
     },
     mounted() {
-        this.getBookCountAPI();
+        this.getBookNameAPI();
     },
     methods: {
-        async getBookCountAPI() {
+        async getBookNameAPI() {
             try {
             const response = await axios.get('https://booknames-mg4yxnf5gq-uc.a.run.app')
             this.jsondata = response.data;
