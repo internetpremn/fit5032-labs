@@ -4,11 +4,11 @@
       <button @click="getBookCount">Get Book Count</button>
       <button @click="getBookNames">Get Book Names</button>
       
-      <p v-if="count !== null">Total number of books: {{ count }}</p>
+      <p  class="mt-5" v-if="count !== null">Total number of books: {{ count }}</p>
       <p v-if="error">{{ error }}</p>
   
       <div v-if="bookNames.length > 0">
-        <h2>Book List</h2>
+        <h2 class="mt-5">List of Book Names</h2>
         <ul>
           <li v-for="(book, index) in bookNames" :key="index">{{ book }}</li>
         </ul>

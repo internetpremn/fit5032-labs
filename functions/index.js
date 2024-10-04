@@ -55,7 +55,7 @@ exports.bookNames = onRequest((req, res ) => {
 
 const functions = require("firebase-functions");
 
-exports.addBookWithCapitalization = functions.firestore
+exports.addCapitalisedBooks = functions.firestore
     .document("books/{bookId}")
     .onCreate(async (snap, context) => {
       const newBook = snap.data();
@@ -66,8 +66,8 @@ exports.addBookWithCapitalization = functions.firestore
         await snap.ref.update({
           name: nameCap,
         });
-        console.log("Book name capitalized");
+        console.log("Book name capitalised");
       } catch (error) {
-        console.error("Error capitalizing book name: ", error);
+        console.error("Error capitalising book name: ", error);
       }
     });
