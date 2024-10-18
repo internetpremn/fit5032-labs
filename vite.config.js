@@ -10,7 +10,7 @@ export default defineConfig({
     ? '/'
     : process.env.GITHUB_ACTIONS
       ? '/fit5032-labs/'
-      : '/', 
+      : '/fit5032-labs/', 
   build: {
     outDir: 'dist'
   },
