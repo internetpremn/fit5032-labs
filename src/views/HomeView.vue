@@ -262,6 +262,8 @@ const validatePassword = (blur) => {
  * Confirm password validation function that checks if the password and confirm password fields match.
  * @param blur: boolean - If true, the function will display an error message if the passwords do not match.
  */
+
+ // Test Change
 const validateConfirmPassword = (blur) => {
   if (formData.value.password !== formData.value.confirmPassword) {
     if (blur) errors.value.confirmPassword = 'Passwords do not match.'
