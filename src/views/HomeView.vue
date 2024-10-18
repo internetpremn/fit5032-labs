@@ -7,6 +7,7 @@
       <div class="col-sm-8 offset-sm-2">
         <h1 class="text-center">🗄️ W4. Library Registration Form</h1>
         <!-- <label class="text-center">This form now includes validation</label> -->
+        
         <form @submit.prevent="submitForm">
           <div class="row mb-3 mt-5">
             <div class="col-sm-6">
@@ -158,6 +159,7 @@
 </template>
 
 <script setup>
+// Test
 import { ref } from 'vue'
 
 const formData = ref({
