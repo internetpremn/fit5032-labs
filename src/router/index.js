@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import AboutView from '../views/AboutView.vue'
 import LoginView from '@/views/LoginView.vue'
-// import FirebaseSigninView from '@/views/FirebaseSignin.vue'
-// import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
+import FirebaseSigninView from '@/views/FirebaseSignin.vue'
+import FirebaseRegisterView from '@/views/FirebaseRegisterView.vue'
 import AddBookView from '@/views/AddBookView.vue'
 import GetBookCountView from '@/views/GetBookCountView.vue'
 import { getAuth } from 'firebase/auth'
@@ -31,16 +31,16 @@ const routes = [
     component: AboutView,
     meta: { requiresAuth: true, role: ['buyer'] }
   },
-  // {
-  //   path: '/firelogin',
-  //   name: 'FireLogin',
-  //   component: FirebaseSigninView
-  // },
-  // {
-  //   path: '/fireregister',
-  //   name: 'FireRegister',
-  //   component: FirebaseRegisterView
-  // },
+  {
+    path: '/firelogin',
+    name: 'FireLogin',
+    component: FirebaseSigninView
+  },
+  {
+    path: '/fireregister',
+    name: 'FireRegister',
+    component: FirebaseRegisterView
+  },
   {
     path: '/addbook',
     name: 'AddBook',
